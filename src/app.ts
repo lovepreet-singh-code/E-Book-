@@ -20,7 +20,6 @@ app.get("/test", (req, res) => {
 
 app.use("/api/users", userRouter);
 
-
 app.use(globalErrorHandler);
 
 export default app;
