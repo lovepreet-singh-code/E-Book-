@@ -1,14 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import express from "express";
-
-
+import express, { NextFunction, Request, Response } from "express";
+import { config } from "./config/config";
+import globalErrorHandler from "./middlewares/globalErrorHandler";
+import createHttpError from "http-errors";
 const app = express();
 
 
-// Routes
 app.get("/", (req, res, next) => {
-    res.json({ message: "Welcome to Book api" });
+
+  const error = createHttpError(400, "Something went wrong");
+  next(error); 
 });
 
+app.get("/test", (req, res) => {
+  res.send("Everything is fine!");
+});
+
+
+app.use(globalErrorHandler);
 
 export default app;
