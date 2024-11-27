@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from "express";
 import cloudinary from "../config/cloudinary";
 import path from "node:path";
@@ -147,5 +148,14 @@ import { AuthRequest } from "../middlewares/authenticate";
     res.json(updatedBook);
 };
 
-
-  export { createBook, updateBook};
+const listBooks = async (req: Request, res: Response, next: NextFunction) => {
+    
+    try {
+        // todo: add pagination.
+        const book = await bookModel.find().populate("author", "name");
+        res.json(book);
+    } catch (err) {
+        return next(createHttpError(500, "Error while getting a book"));
+    }
+};
+  export { createBook, updateBook,listBooks};
